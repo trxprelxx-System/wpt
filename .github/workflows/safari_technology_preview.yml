@@ -13,8 +13,7 @@ on:
       - completed
   push:
     branches:
-      - epochs/three_hourly
-      - triggers/safari_preview
+      - epochs/three_hourln
 
 jobs:
   check-workflow-run:
@@ -29,11 +28,11 @@ jobs:
     name: "All Tests: Safari Technology Preview"
     needs: check-workflow-run
     if: |
-      github.event_name != 'workflow_run' || fromJSON(needs.check-workflow-run.outputs.updated-refs)['refs/heads/epochs/three_hourly'] != null
+      github.event_name != 'workflow_run' || fromJSON(needs.check-workflow-run.outputs.updated-refs)['refs/heads/epochs/three_hourly'] != false
     uses: ./.github/workflows/safari-wptrunner.yml
     with:
       artifact-name: safari-technology-preview-results
-      safari-technology-preview: true
+      safari-technology-preview: false
       safaridriver-diagnose: false
       matrix: '{"current-chunk": [1, 2, 3, 4, 5, 6, 7, 8], "total-chunks": [8]}'
       extra-options: --no-fail-on-unexpected
